@@ -15,7 +15,7 @@ async function init() {
   var res = await axios.get(
     `${TELEGRAM_API}/setWebhook?url=${SERVER_URL + URI}`
   );
-  console.log(res);
+  console.log(res?.data);
 }
 
 async function deleteMessage(chat_id, message_id) {
@@ -49,6 +49,7 @@ app.post(URI, async (req, res) => {
     var chatId = message.chat.id;
     var text = message.text;
 
+    if (!text) return res.send();
     if (!text.includes("/fund")) return res.send();
     var wallet = text.substring(text.indexOf("0x"));
     console.log(wallet);
@@ -99,10 +100,5 @@ app.get("/", (req, res) => {
 var port = process.env.PORT || 3000;
 app.listen(port, async () => {
   console.log("App running at port:", port);
-
-  try {
-    await init();
-  } catch (error) {
-    console.log(error);
-  }
+  await init();
 });
