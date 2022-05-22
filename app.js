@@ -18,7 +18,7 @@ async function init() {
   } catch (error) {
     console.log("AXIOS:", error);
   }
-  console.log(res.data);
+  console.log(res);
 }
 
 // async function deleteMessage(chat_id, message_id) {
