@@ -17,6 +17,7 @@ async function init() {
     res = await axios.get(`${TELEGRAM_API}/setWebhook?url=${SERVER_URL + URI}`);
   } catch (error) {
     console.log("AXIOS:", error);
+    res.send("AXIOS set error");
   }
   console.log(res);
 }
