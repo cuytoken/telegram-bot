@@ -13,13 +13,13 @@ var URI = `/webhook/${TELEGRAM_API_KEY}`;
 
 async function init() {
   var res;
+  console.log("calling AXIOS =====================================");
   try {
     res = await axios.get(`${TELEGRAM_API}/setWebhook?url=${SERVER_URL + URI}`);
   } catch (error) {
     console.log("AXIOS:", error);
-    res.send("AXIOS set error");
   }
-  console.log(res);
+  console.log("RES", res);
 }
 
 // async function deleteMessage(chat_id, message_id) {
