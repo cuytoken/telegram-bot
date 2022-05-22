@@ -12,9 +12,12 @@ var TELEGRAM_API = `https://api.telegram.org/bot${TELEGRAM_API_KEY}`;
 var URI = `/webhook/${TELEGRAM_API_KEY}`;
 
 async function init() {
-  var res = await axios.get(
-    `${TELEGRAM_API}/setWebhook?url=${SERVER_URL + URI}`
-  );
+  var res;
+  try {
+    res = await axios.get(`${TELEGRAM_API}/setWebhook?url=${SERVER_URL + URI}`);
+  } catch (error) {
+    console.log("AXIOS:", error);
+  }
   console.log(res.data);
 }
 
