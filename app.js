@@ -94,7 +94,7 @@ app.get("/", (req, res) => {
   res.send("Working");
 });
 
-var port = process.env.port || 3000;
+var port = process.env.PORT || 3000;
 app.listen(port, async () => {
   console.log("App running at port:", port);
   // await init();
