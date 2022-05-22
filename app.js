@@ -5,7 +5,8 @@ var axios = require("axios");
 var ethers = require("ethers");
 app.use(bodyParser.json());
 
-// var { TELEGRAM_API_KEY, SERVER_URL, WEBHOOK_DEFENDER } = process.env;
+var { TELEGRAM_API_KEY, SERVER_URL, WEBHOOK_DEFENDER } = process.env;
+console.log(TELEGRAM_API_KEY, SERVER_URL, WEBHOOK_DEFENDER);
 // var TELEGRAM_API = `https://api.telegram.org/bot${TELEGRAM_API_KEY}`;
 // var URI = `/webhook/${TELEGRAM_API_KEY}`;
 
