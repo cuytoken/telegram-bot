@@ -8,15 +8,15 @@ app.use(bodyParser.json());
 var { TELEGRAM_API_KEY, SERVER_URL, WEBHOOK_DEFENDER } = process.env;
 console.log(TELEGRAM_API_KEY, SERVER_URL, WEBHOOK_DEFENDER);
 
-// var TELEGRAM_API = `https://api.telegram.org/bot${TELEGRAM_API_KEY}`;
-// var URI = `/webhook/${TELEGRAM_API_KEY}`;
+var TELEGRAM_API = `https://api.telegram.org/bot${TELEGRAM_API_KEY}`;
+var URI = `/webhook/${TELEGRAM_API_KEY}`;
 
-// async function init() {
-//   var res = await axios.get(
-//     `${TELEGRAM_API}/setWebhook?url=${SERVER_URL + URI}`
-//   );
-//   console.log(res.data);
-// }
+async function init() {
+  var res = await axios.get(
+    `${TELEGRAM_API}/setWebhook?url=${SERVER_URL + URI}`
+  );
+  console.log(res.data);
+}
 
 // async function deleteMessage(chat_id, message_id) {
 //   try {
@@ -99,5 +99,5 @@ app.get("/", (req, res) => {
 var port = process.env.PORT || 3000;
 app.listen(port, async () => {
   console.log("App running at port:", port);
-  // await init();
+  await init();
 });
