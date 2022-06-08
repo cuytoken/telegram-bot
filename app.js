@@ -67,7 +67,7 @@ app.post(URI, async (req, res) => {
     // inform request to user
     await sendMessage(
       chatId,
-      `${from}, en breve recibirás 500 BUSD. ¡Hasta pronto!`
+      `${from}, en breve recibirás 5325 PCUY. ¡Hasta pronto!`
     );
 
     // call defender
