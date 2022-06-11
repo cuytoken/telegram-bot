@@ -46,9 +46,9 @@ async function init() {
   console.log(res?.data);
 }
 
-function deleteMessage(chat_id, message_id) {
+async function deleteMessage(chat_id, message_id) {
   try {
-    axios.post(`${TELEGRAM_API}/deleteMessage`, {
+    await axios.post(`${TELEGRAM_API}/deleteMessage`, {
       chat_id,
       message_id,
     });
@@ -57,9 +57,9 @@ function deleteMessage(chat_id, message_id) {
   }
 }
 
-function sendMessage(chat_id, text) {
+async function sendMessage(chat_id, text) {
   try {
-    axios.post(`${TELEGRAM_API}/sendMessage`, {
+    await axios.post(`${TELEGRAM_API}/sendMessage`, {
       chat_id,
       text,
     });
@@ -82,7 +82,7 @@ app.post(URI, async (req, res) => {
     var walletSummary = "0x..." + wallet.substr(-5);
 
     // validate address checksum
-    deleteMessage(chatId, messageId);
+    await deleteMessage(chatId, messageId);
     try {
       wallet = ethers.utils.getAddress(wallet);
     } catch (error) {
@@ -92,7 +92,7 @@ app.post(URI, async (req, res) => {
     }
     console.log("wallet wallet", wallet);
     // inform request to user
-    sendMessage(
+    await sendMessage(
       chatId,
       `${from}, estamos procesando su pedido ${walletSummary}.`
     );
@@ -125,6 +125,7 @@ app.post(URI, async (req, res) => {
     var message = "";
     var maticBalance = ethers.utils.parseEther("0.025");
     var bal = (await provider.getBalance(wallet)).toString();
+    console.log("bal", bal);
     if (bal == 0) {
       message += "Se envió 0.025 MATIC. ";
       var tx = await signer.sendTransaction({
@@ -134,7 +135,7 @@ app.post(URI, async (req, res) => {
       await tx.wait();
       console.log("didn't have MATIC at wallet:", wallet);
     }
-
+    console.log("hasReceived", hasReceived);
     if (hasReceived) {
       await sendMessage(
         chatId,
