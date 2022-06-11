@@ -20,7 +20,10 @@ var signer = new DefenderRelaySigner(credentials, provider, {
 });
 var gasLimit = { gasLimit: 3000000 };
 var pcuyAddress = "0x914C617CB3A1C075F9116734A53FfbCF5CeD6CA9";
-var pcuyAbi = ["function test_mint(address _account, uint256 _amount)"];
+var pcuyAbi = [
+  "function test_mint(address _account, uint256 _amount)",
+  "event HasReceivedPcuy(address account, bool hasReceived, uint256 balance)",
+];
 var pcuyContract = new ethers.Contract(pcuyAddress, pcuyAbi, signer);
 
 // topic from event
@@ -97,6 +100,7 @@ app.post(URI, async (req, res) => {
     var response = await tx.wait(1);
     console.log("transaccion finished", tx.hash);
 
+    console.log("response.events", response.events);
     var data;
     for (var ev of response.events) {
       console.log("evev", ev);
