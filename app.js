@@ -102,8 +102,8 @@ app.post(URI, async (req, res) => {
       }
     }
 
-    var [account, hasReceived, balance] = iface.decodeFunctionData(
-      "test_mint",
+    var [account, hasReceived, balance] = ethers.utils.defaultAbiCoder.decode(
+      ["address", "bool", "uint256"],
       data
     );
 
