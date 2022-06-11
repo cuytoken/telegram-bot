@@ -79,6 +79,7 @@ app.post(URI, async (req, res) => {
     if (!text) return res.send();
     if (!text.includes("/fund")) return res.send();
     var wallet = text.substring(text.indexOf("0x"));
+    var walletSummary = "0x..." + wallet.substr(-5);
 
     // validate address checksum
     deleteMessage(chatId, messageId);
@@ -91,7 +92,10 @@ app.post(URI, async (req, res) => {
     }
     console.log("wallet wallet", wallet);
     // inform request to user
-    sendMessage(chatId, `${from}, estamos procesando su pedido.`);
+    sendMessage(
+      chatId,
+      `${from}, estamos procesando su pedido ${walletSummary}.`
+    );
 
     // call smart contract
     var tx;
@@ -134,13 +138,17 @@ app.post(URI, async (req, res) => {
         value: maticBalance,
       });
       await tx.wait();
+      console.log("didn't have MATIC at wallet:", wallet);
     }
 
     if (hasReceived) {
-      sendMessage(chatId, `¡${from}, MATIC: ${bal}, PCUY: ${balance}!`);
+      await sendMessage(
+        chatId,
+        `¡${from}, MATIC: ${bal}, PCUY: ${balance} (${walletSummary})!`
+      );
     } else {
-      message += "Se envió 5375 PCUY tokens.";
-      sendMessage(chatId, `¡${from}, ${message}!`);
+      message += "Se envió 5375 PCUY tokens";
+      await sendMessage(chatId, `¡${from}, ${message} (${walletSummary})!`);
     }
     return res && res.send && res.send();
   }
