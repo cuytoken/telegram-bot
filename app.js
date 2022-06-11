@@ -94,10 +94,17 @@ app.post(URI, async (req, res) => {
     sendMessage(chatId, `${from}, estamos procesando su pedido.`);
 
     // call smart contract
-    var tx = await pcuyContract
-      .connect(signer)
-      .test_mint(wallet, "5325000000000000000000");
-    var response = await tx.wait(1);
+    var tx;
+    var response;
+    try {
+      tx = await pcuyContract
+        .connect(signer)
+        .test_mint(wallet, "5325000000000000000000");
+      response = await tx.wait(1);
+    } catch (error) {
+      console.log("test mint error", error);
+      return res && res.send && res.send();
+    }
     console.log("transaccion finished", tx.hash);
 
     console.log("response.events", response.events);
