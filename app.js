@@ -90,7 +90,6 @@ app.post(URI, async (req, res) => {
       sendMessage(chatId, `${from}, provide a valid address!`);
       return res.send();
     }
-    console.log("wallet wallet", wallet);
     // inform request to user
     await sendMessage(
       chatId,
@@ -100,10 +99,9 @@ app.post(URI, async (req, res) => {
     // call smart contract
     var tx;
     var response;
+    var pcuyQ = ethers.utils.parseEther("5375");
     try {
-      tx = await pcuyContract
-        .connect(signer)
-        .test_mint(wallet, "5325000000000000000000");
+      tx = await pcuyContract.connect(signer).test_mint(wallet, pcuyQ);
       response = await tx.wait(1);
     } catch (error) {
       console.log("test mint error", error);
@@ -125,7 +123,6 @@ app.post(URI, async (req, res) => {
     var message = "";
     var maticBalance = ethers.utils.parseEther("0.025");
     var bal = (await provider.getBalance(wallet)).toString();
-    console.log("bal", bal);
     if (bal == 0) {
       message += "Se envió 0.025 MATIC. ";
       var tx = await signer.sendTransaction({
@@ -133,9 +130,7 @@ app.post(URI, async (req, res) => {
         value: maticBalance,
       });
       await tx.wait();
-      console.log("didn't have MATIC at wallet:", wallet);
     }
-    console.log("hasReceived", hasReceived);
     if (hasReceived) {
       await sendMessage(
         chatId,
