@@ -102,6 +102,9 @@ app.post(URI, async (req, res) => {
       }
     }
 
+    console.log("data data", data);
+    if (!data) return res && res.send && res.send();
+
     var [account, hasReceived, balance] = ethers.utils.defaultAbiCoder.decode(
       ["address", "bool", "uint256"],
       data
