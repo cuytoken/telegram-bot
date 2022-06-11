@@ -102,13 +102,13 @@ app.post(URI, async (req, res) => {
       }
     }
 
-    var [account, hasReceived, balance] = utils.defaultAbiCoder.decode(
+    var [account, hasReceived, balance] = ethers.utils.defaultAbiCoder.decode(
       ["address", "bool", "uint256"],
       data
     );
 
     var message = "";
-    var maticBalance = utils.parseEther("0.025");
+    var maticBalance = ethers.utils.parseEther("0.025");
     var bal = (await provider.getBalance(wallet)).toString();
     if (bal == 0) {
       message += "Se envió 0.025 MATIC. ";
