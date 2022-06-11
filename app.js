@@ -102,9 +102,8 @@ app.post(URI, async (req, res) => {
       }
     }
 
-    
     var [account, hasReceived, balance] = iface.decodeFunctionData(
-      "test_mint"
+      "test_mint",
       data
     );
 
