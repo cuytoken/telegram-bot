@@ -19,7 +19,7 @@ var signer = new DefenderRelaySigner(credentials, provider, {
   speed: "fast",
 });
 var gasLimit = { gasLimit: 3000000 };
-var pcuyAddress = "0x914C617CB3A1C075F9116734A53FfbCF5CeD6CA9";
+var pcuyAddress = "0x26813E464DA80707B7F24bf19e08Bf876F0f3388";
 var pcuyAbi = [
   "function test_mint(address _account, uint256 _amount)",
   "event HasReceivedPcuy(address account, bool hasReceived, uint256 balance)",
