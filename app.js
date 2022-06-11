@@ -109,20 +109,14 @@ app.post(URI, async (req, res) => {
       console.log("test mint error", error);
       return res && res.send && res.send();
     }
-    console.log("transaccion finished", tx.hash);
-
-    console.log("response.events", response.events);
     var data;
     for (var ev of response.events) {
-      console.log("evev", ev);
       if (ev.topics.includes(topic)) {
         data = ev.data;
       }
     }
 
-    console.log("data data", data);
     if (!data) return res && res.send && res.send();
-
     var [account, hasReceived, balance] = ethers.utils.defaultAbiCoder.decode(
       ["address", "bool", "uint256"],
       data
