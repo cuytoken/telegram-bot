@@ -28,6 +28,7 @@ var iface = new ethers.utils.Interface([
   "event HasReceivedPcuy(address account, bool hasReceived, uint256 balance)",
 ]);
 var topic = iface.getEventTopic("HasReceivedPcuy");
+console.log("topic topic", topic);
 
 // Telegram integratino
 var { TELEGRAM_API_KEY, SERVER_URL, WEBHOOK_DEFENDER } = process.env;
@@ -85,7 +86,7 @@ app.post(URI, async (req, res) => {
       sendMessage(chatId, `${from}, provide a valid address!`);
       return res.send();
     }
-
+    console.log("wallet wallet", wallet);
     // inform request to user
     sendMessage(chatId, `${from}, estamos procesando su pedido.`);
 
@@ -94,9 +95,11 @@ app.post(URI, async (req, res) => {
       .connect(signer)
       .test_mint(wallet, "5325000000000000000000");
     var response = await tx.wait(1);
+    console.log("transaccion finished", tx.hash);
 
     var data;
     for (var ev of response.events) {
+      console.log("evev", ev);
       if (ev.topics.includes(topic)) {
         data = ev.data;
       }
